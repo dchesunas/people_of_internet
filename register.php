@@ -29,6 +29,18 @@ if((isset($_POST['user-name']))&&(isset($_POST['pass']))){
     if(strlen($pass)<5||strlen($pass)>25){
         $error=$error." Length of password must be between 5 and 25 symbols<br>";
     }
+    $flag=false;
+    for($i=0;$i<strlen($pass);$i++){
+        if(is_numeric($pass[$i])) {
+            $flag = true;
+            break;
+        }
+    }
+    if(!$flag){
+        $error=$error."Password must contain at least 1 digit<br>";
+    }
+
+
 
  if(isset($_POST['captcha'])) {
      if ($_SESSION['rand_code'] != $_POST['captcha']) {
@@ -83,7 +95,7 @@ $image_path="";
 
     <form method="post" enctype="multipart/form-data">
 
-        <label for="name">Nickname:</label><input type="text" value="<?php $name?>" id="name" name="user-name">
+        <label for="name">Nickname:</label><input type="text" value='<?php echo "$name"?>' id="name" name="user-name">
         <br>
         <label for="pass">Password:</label><input type="password" id="pass" value="" name="pass"><img id='show-pass' src="images/view.png">
         <br>
